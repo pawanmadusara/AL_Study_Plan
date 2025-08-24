@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A/L අධ්‍යයන කාලසටහන - Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F4F8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #118AB2, #06D6A0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .input-group label {
+            font-weight: 600;
+        }
+        .input-group input {
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            width: 100%;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-black text-[#073B4C] mb-2">ඔබේ A/L සාර්ථකත්වයේ දෘශ්‍ය සැලැස්ම</h1>
+            <p class="text-lg text-[#118AB2]">අගෝස්තු 25 සිට නොවැම්බර් 10 දක්වා ඔබේ අධ්‍යයන ගමන</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="md:col-span-2 lg:col-span-1 bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                <h2 class="text-2xl font-bold text-[#073B4C] mb-4">දෛනික අධ්‍යයන කැපවීම</h2>
+                <p id="totalStudyHoursDisplay" class="text-8xl font-black gradient-text">16.5</p>
+                <p class="text-2xl font-bold text-[#073B4C]">පැය</p>
+                <p class="mt-4 text-gray-600">මෙම කාලසටහන ඔබේ ඉලක්ක සපුරා ගැනීම සඳහා උපරිම අවධානය යොමු කිරීමට සකස් කර ඇත.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-[#073B4C] mb-4">ඔබේ දවස බෙදී යන ආකාරය</h2>
+                <p class="text-center text-gray-600 mb-4">සෑම මිනිත්තුවක්ම වැදගත් වේ. අධ්‍යයනය, විවේකය සහ නින්ද අතර සමබරතාවය සාර්ථකත්වයට අත්‍යවශ්‍ය වේ.</p>
+                <div class="chart-container">
+                    <canvas id="dailyBreakdownChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-[#073B4C] mb-4">විෂයයන් සඳහා කාලය</h2>
+                <p class="text-center text-gray-600 mb-4">සෑම විෂයයකටම සමාන අවධානයක් ලබා දීමෙන් විභාගයට හොඳින් මුහුණ දීමට ඔබට හැකියාව ලැබේ.</p>
+                <div class="chart-container">
+                    <canvas id="subjectHoursChart"></canvas>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-[#073B4C] mb-4">ඔබේ අධ්‍යයන ක්‍රමෝපාය</h2>
+                <p class="text-center text-gray-600 mb-6">නව පාඩම් ඉගෙනීම, ප්‍රශ්න පත්‍ර කිරීම සහ පුනරීක්ෂණය අතර කාලය බෙදා වෙන් කිරීමෙන් ඔබේ දැනුම තහවුරු කරගන්න.</p>
+                <div class="w-full max-w-4xl mx-auto h-96">
+                    <canvas id="strategyChart"></canvas>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-[#073B4C] mb-6">ඔබේ දත්ත යාවත්කාලීන කරන්න</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <div>
+                        <h3 class="font-bold text-lg text-[#073B4C] mb-2">ගිණුම්කරණය</h3>
+                        <div class="input-group mb-2">
+                            <label for="accNew">නව මාතෘකා</label>
+                            <input type="number" id="accNew" value="1.5" step="0.5" min="0">
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="accPast">පසුගිය ප්‍රශ්න පත්‍ර</label>
+                            <input type="number" id="accPast" value="2" step="0.5" min="0">
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="accRev">පුනරීක්ෂණය</label>
+                            <input type="number" id="accRev" value="1" step="0.5" min="0">
+                        </div>
+                        <p id="accValidation" class="text-sm text-red-500 mt-2 hidden">සැසියන්හි එකතුව පැය ගණනට සමාන විය යුතුය.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-lg text-[#073B4C] mb-2">ICT</h3>
+                        <div class="input-group mb-2">
+                            <label for="ictNew">නව මාතෘකා</label>
+                            <input type="number" id="ictNew" value="1" step="0.5" min="0">
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="ictPast">පසුගිය ප්‍රශ්න පත්‍ර</label>
+                            <input type="number" id="ictPast" value="2" step="0.5" min="0">
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="ictRev">පුනරීක්ෂණය</label>
+                            <input type="number" id="ictRev" value="1.5" step="0.5" min="0">
+                        </div>
+                        <p id="ictValidation" class="text-sm text-red-500 mt-2 hidden">සැසියන්හි එකතුව පැය ගණනට සමාන විය යුතුය.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-lg text-[#073B4C] mb-2">ව්‍යාපාර අධ්‍යයනය</h3>
+                        <div class="input-group mb-2">
+                            <label for="bsNew">නව මාතෘකා</label>
+                            <input type="number" id="bsNew" value="1.5" step="0.5" min="0">
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="bsPast">පසුගිය ප්‍රශ්න පත්‍ර</label>
+                            <input type="number" id="bsPast" value="2" step="0.5" min="0">
+                        </div>
+                        <div class="input-group mb-2">
+                            <label for="bsRev">පුනරීක්ෂණය</label>
+                            <input type="number" id="bsRev" value="1" step="0.5" min="0">
+                        </div>
+                        <p id="bsValidation" class="text-sm text-red-500 mt-2 hidden">සැසියන්හි එකතුව පැය ගණනට සමාන විය යුතුය.</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button id="updateButton" class="bg-[#118AB2] hover:bg-[#06D6A0] text-white font-bold py-3 px-8 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+                        යාවත්කාලීන කරන්න
+                    </button>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-[#073B4C] mb-6">විශේෂ පන්ති කාලසටහන</h2>
+                <div class="space-y-6">
+                    
+                    <div class="flex items-center">
+                        <div class="w-24 text-right mr-4">
+                            <p class="font-bold text-lg text-[#118AB2]">අඟහරුවාදා</p>
+                        </div>
+                        <div class="flex-1 border-l-4 border-[#118AB2] pl-4">
+                            <p class="font-bold text-[#073B4C]">Target Paper MCQ</p>
+                            <p class="text-gray-600">රාත්‍රී 10:00 - රාත්‍රී 12:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <div class="w-24 text-right mr-4">
+                            <p class="font-bold text-lg text-[#06D6A0]">බ්‍රහස්පතින්දා</p>
+                        </div>
+                        <div class="flex-1 border-l-4 border-[#06D6A0] pl-4">
+                            <p class="font-bold text-[#073B4C]">Surprise BS</p>
+                            <p class="text-gray-600">රාත්‍රී 7:00 - රාත්‍රී 12:00</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <div class="w-24 text-right mr-4">
+                            <p class="font-bold text-lg text-[#FFD166]">සිකුරාදා</p>
+                        </div>
+                        <div class="flex-1 border-l-4 border-[#FFD166] pl-4">
+                            <p class="font-bold text-[#073B4C]">Surprise BS</p>
+                            <p class="text-gray-600">රාත්‍රී 7:00 - රාත්‍රී 12:00</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <div class="w-24 text-right mr-4">
+                            <p class="font-bold text-lg text-[#FF6B6B]">සෙනසුරාදා</p>
+                        </div>
+                        <div class="flex-1 border-l-4 border-[#FF6B6B] pl-4">
+                            <p class="font-bold text-[#073B4C]">36 Min: Question</p>
+                            <p class="text-gray-600">රාත්‍රී 7:00 - රාත්‍රී 9:00</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <div class="w-24 text-right mr-4">
+                            <p class="font-bold text-lg text-[#073B4C]">ඉරිදා</p>
+                        </div>
+                        <div class="flex-1 border-l-4 border-[#073B4C] pl-4">
+                            <p class="font-bold text-[#073B4C]">Target Paper 1, 2, 3, 4</p>
+                            <p class="text-gray-600">සවස 6:30 - රාත්‍රී 12:00</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center mt-12">
+            <p class="text-xl font-bold text-[#073B4C]">"සාර්ථකත්වය යනු කුඩා උත්සාහයන් දිනපතා එකතු වීමයි."</p>
+            <p class="text-gray-600 mt-2">ඔබේ උත්සාහය අනිවාර්යයෙන්ම ජයග්‍රහණයෙන් කෙළවර වනු ඇත!</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const chartColors = {
+            red: '#FF6B6B',
+            yellow: '#FFD166',
+            green: '#06D6A0',
+            blue: '#118AB2',
+            darkBlue: '#073B4C'
+        };
+
+        function wrapLabel(label, maxLength = 16) {
+            if (label.length <= maxLength) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+
+        const mandatoryTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: chartColors.darkBlue,
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            }
+        };
+
+        let dailyBreakdownChart, subjectHoursChart, strategyChart;
+
+        const accNewInput = document.getElementById('accNew');
+        const accPastInput = document.getElementById('accPast');
+        const accRevInput = document.getElementById('accRev');
+        const accValidation = document.getElementById('accValidation');
+
+        const ictNewInput = document.getElementById('ictNew');
+        const ictPastInput = document.getElementById('ictPast');
+        const ictRevInput = document.getElementById('ictRev');
+        const ictValidation = document.getElementById('ictValidation');
+
+        const bsNewInput = document.getElementById('bsNew');
+        const bsPastInput = document.getElementById('bsPast');
+        const bsRevInput = document.getElementById('bsRev');
+        const bsValidation = document.getElementById('bsValidation');
+
+        const updateButton = document.getElementById('updateButton');
+        const totalStudyHoursDisplay = document.getElementById('totalStudyHoursDisplay');
+
+        function updateCharts() {
+            const accNew = parseFloat(accNewInput.value);
+            const accPast = parseFloat(accPastInput.value);
+            const accRev = parseFloat(accRevInput.value);
+            const accTotal = accNew + accPast + accRev;
+
+            const ictNew = parseFloat(ictNewInput.value);
+            const ictPast = parseFloat(ictPastInput.value);
+            const ictRev = parseFloat(ictRevInput.value);
+            const ictTotal = ictNew + ictPast + ictRev;
+
+            const bsNew = parseFloat(bsNewInput.value);
+            const bsPast = parseFloat(bsPastInput.value);
+            const bsRev = parseFloat(bsRevInput.value);
+            const bsTotal = bsNew + bsPast + bsRev;
+
+            const totalStudy = accTotal + ictTotal + bsTotal;
+
+            if (isNaN(accTotal) || isNaN(ictTotal) || isNaN(bsTotal)) {
+                alert('සියලු ක්ෂේත්‍ර වලට අංක ඇතුළත් කරන්න.');
+                return;
+            }
+
+            totalStudyHoursDisplay.textContent = totalStudy.toFixed(1);
+            
+            dailyBreakdownChart.data.datasets[0].data = [totalStudy, 4.5, 3];
+            dailyBreakdownChart.update();
+
+            subjectHoursChart.data.datasets[0].data = [accTotal, ictTotal, bsTotal];
+            subjectHoursChart.update();
+
+            strategyChart.data.datasets[0].data = [accNew, ictNew, bsNew];
+            strategyChart.data.datasets[1].data = [accPast, ictPast, bsPast];
+            strategyChart.data.datasets[2].data = [accRev, ictRev, bsRev];
+            strategyChart.update();
+        }
+
+        updateButton.addEventListener('click', updateCharts);
+
+        const dailyBreakdownCtx = document.getElementById('dailyBreakdownChart').getContext('2d');
+        dailyBreakdownChart = new Chart(dailyBreakdownCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['අධ්‍යයනය', 'නින්ද', 'විවේකය'],
+                datasets: [{
+                    label: 'පැය ගණන',
+                    data: [16.5, 4.5, 3],
+                    backgroundColor: [chartColors.blue, chartColors.darkBlue, chartColors.green],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 4,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '60%',
+                ...mandatoryTooltipOptions
+            }
+        });
+
+        const subjectHoursCtx = document.getElementById('subjectHoursChart').getContext('2d');
+        subjectHoursChart = new Chart(subjectHoursCtx, {
+            type: 'bar',
+            data: {
+                labels: ['ගිණුම්කරණය', 'ICT', 'ව්‍යාපාර අධ්‍යයනය'],
+                datasets: [{
+                    label: 'දෛනික පැය ගණන',
+                    data: [4.5, 4.5, 4.5],
+                    backgroundColor: [chartColors.red, chartColors.yellow, chartColors.green],
+                    borderRadius: 8,
+                    barThickness: 30
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: chartColors.darkBlue },
+                        grid: { color: '#E5E7EB' }
+                    },
+                    x: {
+                        ticks: { color: chartColors.darkBlue },
+                        grid: { display: false }
+                    }
+                },
+                ...mandatoryTooltipOptions
+            }
+        });
+
+        const strategyCtx = document.getElementById('strategyChart').getContext('2d');
+        strategyChart = new Chart(strategyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['ගිණුම්කරණය', 'ICT', wrapLabel('ව්‍යාපාර අධ්‍යයනය')],
+                datasets: [
+                    {
+                        label: 'නව මාතෘකා',
+                        data: [1.5, 1, 1.5],
+                        backgroundColor: chartColors.blue,
+                    },
+                    {
+                        label: 'පසුගිය ප්‍රශ්න පත්‍ර',
+                        data: [2, 2, 2],
+                        backgroundColor: chartColors.green,
+                    },
+                    {
+                        label: 'පුනරීක්ෂණය',
+                        data: [1, 1.5, 1],
+                        backgroundColor: chartColors.yellow,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { 
+                        stacked: true,
+                        ticks: { color: chartColors.darkBlue },
+                        grid: { display: false }
+                    },
+                    y: { 
+                        stacked: true,
+                        beginAtZero: true,
+                        ticks: { color: chartColors.darkBlue },
+                        grid: { color: '#E5E7EB' }
+                    }
+                },
+                ...mandatoryTooltipOptions
+            }
+        });
+    </script>
+
+</body>
+</html>
